@@ -1,0 +1,13 @@
+.center-container{
+    display: flex;
+    justify-content: center;
+}
+
+.rounded-form-control{
+    border-radius: 30px;
+}
+
+.scroll-container {
+    overflow-x: auto;
+    white-space: nowrap; 
+}
