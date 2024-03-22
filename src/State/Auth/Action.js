@@ -10,7 +10,8 @@ const registerFailure = (error) => ({ type: REGISTER_FAILURE, payload: error });
 export const register = (userData) => async (dispatch) => {
     dispatch(registerRequest())
     try {
-        const response = await axios.post(`https://delicious-stamp-production.up.railway.app/auth/signup`, userData)
+        console.log("API_BASE_URL_SIGNUP",API_BASE_URL);
+        const response = await axios.post(`${API_BASE_URL}/auth/signup`, userData)
         const user = response.data;
         if (user.jwt) {
             localStorage.setItem("jwt", user.jwt)
