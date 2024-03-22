@@ -18,7 +18,7 @@ const CustomerRouters = () => {
   return (
     <div>
       <Routes>
-        <Route path='/signup' element={<Signup />} ></Route>
+        <Route path='/' element={<Signup />} ></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/HomePage' element={<HomePage />}></Route>
         <Route path='/productsHomePage' element={<ProductMain />}></Route>

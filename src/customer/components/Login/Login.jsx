@@ -95,7 +95,7 @@ const Login = () => {
 
                             <p className="mt-10 text-center text-sm text-gray-500">
                                 Not a member?{' '}
-                                <a onClick={()=>navigate("/signup")} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                                <a onClick={()=>navigate("/")} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                                     Create account
                                 </a>
                             </p>

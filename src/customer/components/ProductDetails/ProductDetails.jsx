@@ -68,34 +68,34 @@ function classNames(...classes) {
 
 export default function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState("")
-  const navigate=useNavigate();
-  const params=useParams();
-  const dispatch=useDispatch();
-  const {products} =useSelector(store=>store);
+  const navigate = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
+  const { products } = useSelector(store => store);
 
   // const decodedQueryString = decodeURIComponent(location.search);
   // const searchParams = new URLSearchParams(decodedQueryString);
   // const quantity=searchParams.get("quantity");
 
 
-  const handleAddToCart=()=>{
-    const data={productId:params.productId,size:selectedSize.name}
-    console.log("sending data to action.js",data);
+  const handleAddToCart = () => {
+    const data = { productId: params.productId, size: selectedSize.name }
+    console.log("sending data to action.js", data);
     dispatch(addItemToCart(data))
-           navigate("/cart")
+    navigate("/cart")
   }
 
-  useEffect(()=>{
-    const data={
-      productId:params.productId,
+  useEffect(() => {
+    const data = {
+      productId: params.productId,
     }
-   dispatch(findProductsById(data))
-  },[params.productId])
+    dispatch(findProductsById(data))
+  }, [params.productId])
 
 
   return (
     <div className="bg-white">
-      <Product_Navigation/>
+      <Product_Navigation />
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -135,7 +135,7 @@ export default function ProductDetails() {
                 className="h-full w-full object-cover object-center"
               />
             </div>
-            <div className="flex flex-wrapper space-x-5 justify-center">
+            {/* <div className="flex flex-wrapper space-x-5 justify-center">
               {product.images.map((item) => <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem] mt-4">
                 <img
                   src={item.src}
@@ -145,7 +145,7 @@ export default function ProductDetails() {
               </div>)
               }
 
-            </div>
+            </div> */}
 
           </div>
           {/* Product info */}
@@ -175,7 +175,7 @@ export default function ProductDetails() {
 
               </div>
 
-              <form   className="mt-10">
+              <form className="mt-10">
                 {/* Colors */}
 
 
@@ -188,14 +188,14 @@ export default function ProductDetails() {
                   <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
                     <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
                     <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                      {product.sizes.map((size) => (
+                      {products.product?.sizes.map((size) => (
                         <RadioGroup.Option
                           key={size.name}
                           value={size}
-                          disabled={!size.inStock}
+                          disabled={size.inStock}
                           className={({ active }) =>
                             classNames(
-                              size.inStock
+                              true
                                 ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
                                 : 'cursor-not-allowed bg-gray-50 text-gray-200',
                               active ? 'ring-2 ring-indigo-500' : '',
@@ -206,7 +206,7 @@ export default function ProductDetails() {
                           {({ active, checked }) => (
                             <>
                               <RadioGroup.Label as="span">{size.name}</RadioGroup.Label>
-                              {size.inStock ? (
+                              {true ? (
                                 <span
                                   className={classNames(
                                     active ? 'border' : 'border-2',
@@ -252,11 +252,11 @@ export default function ProductDetails() {
                 <h3 className="sr-only">Description</h3>
 
                 <div className="space-y-6">
-                  <p className="text-base text-gray-900">{product.description}</p>
+                  <p className="text-base text-gray-900">{products.product?.description}</p>
                 </div>
               </div>
 
-              <div className="mt-10">
+              {/* <div className="mt-10">
                 <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
 
                 <div className="mt-4">
@@ -268,15 +268,15 @@ export default function ProductDetails() {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="mt-10">
+              {/* <div className="mt-10">
                 <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
                 <div className="mt-4 space-y-6">
                   <p className="text-sm text-gray-600">{product.details}</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
@@ -284,7 +284,7 @@ export default function ProductDetails() {
 
 
       </div>
-      <Footer/>
+      <Footer />
     </div>
   )
 }
