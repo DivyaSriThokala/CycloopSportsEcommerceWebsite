@@ -31,24 +31,24 @@ export default function CheckOut() {
   const querySearch = new URLSearchParams(location.search)
   const step = querySearch.get("step")
   const navigate = useNavigate();
-  
+
   // const orderId=querySearch.get("order_id");
   const { order } = useSelector(store => store)
   console.log("step-value", step);
   const { cart } = useSelector(state => state);
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-
   };
 
-
+  const searchParams = new URLSearchParams(location.search);
+  const deliveryType = searchParams.get("deliveryType");
 
 
   return (
     <div className='px-10 lg:px-20 pt-20 bg-sea-green'>
       <Grid container spacing={4} className='pt-10'>
         <Grid xs={12} lg={5} className='pb-10'>
-          <OrderSummary />
+          <OrderSummary deliveryType={deliveryType} />
 
 
 

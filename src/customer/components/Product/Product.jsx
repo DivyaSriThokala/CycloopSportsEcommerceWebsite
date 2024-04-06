@@ -80,7 +80,7 @@ export default function Product_Filter() {
     const navigate = useNavigate();
     const param = useParams();
     const dispatch = useDispatch();
-    const {products} = useSelector(store=>store)
+    const { products } = useSelector(store => store)
 
     const decodedQueryString = decodeURIComponent(location.search);
     const searchParams = new URLSearchParams(decodedQueryString);
@@ -92,19 +92,19 @@ export default function Product_Filter() {
     const pageNumber = searchParams.get("pageNumber") || 1;
     const stockValue = searchParams.get("stock");
 
-    const handlePaginationChange=(event, value)=>{
-           const searchParams=new URLSearchParams(location.search);
-           searchParams.set("pageNumber",value);
+    const handlePaginationChange = (event, value) => {
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.set("pageNumber", value);
 
-           const query=searchParams.toString();
-          navigate({search:`?${query}`})
+        const query = searchParams.toString();
+        navigate({ search: `?${query}` })
     }
 
     const handleFilter = (value, sectionId) => {
         const searchParams = new URLSearchParams(location.search);
         let filterValue = searchParams.getAll(sectionId)
         if (filterValue.length > 0 && filterValue[0].split(",").includes(value)) {
-            filterValue = filterValue[0].split(",").filter((item) => item !==  value);
+            filterValue = filterValue[0].split(",").filter((item) => item !== value);
             if (filterValue.length === 0) {
                 searchParams.delete(sectionId)
             }
@@ -127,17 +127,17 @@ export default function Product_Filter() {
         const data = {
             category: param.lavelThree,
             colors: colorValue || "",
-            sizes:  sizeValue || "",
+            sizes: sizeValue || "",
             minPrice,
             maxPrice,
             minDiscount: discount || 0,
             sort: sortValue || "price_low",
-            pageNumber: pageNumber-1,
+            pageNumber: pageNumber - 1,
             pageSize: 9,
             stock: stockValue || "in_stock",
 
         }
-        console.log("sending data to Action.js:",data);
+        console.log("sending data to Action.js:", data);
         dispatch(findProducts(data))
     }, [param.lavelThree,
         colorValue,
@@ -148,7 +148,7 @@ export default function Product_Filter() {
         pageNumber,
         stockValue,
     ])
-    
+
 
     return (
 
@@ -392,8 +392,8 @@ export default function Product_Filter() {
                             {/* Product grid */}
                             <div className="lg:col-span-3 w-full">
                                 <div className='flex flex-wrap justify-around bg-white py-5 '>
-                                    {products.products?.content?.map((item)=>(
-                                        <Product_Card product={item}/>
+                                    {products.products?.content?.map((item) => (
+                                        <Product_Card product={item} />
                                     ))}
 
                                 </div>
@@ -402,7 +402,7 @@ export default function Product_Filter() {
                     </section>
                     <section className='w-full px=[3.6rem]'>
                         <div className='px-4 py-5 flex justify-center '>
-                        <Pagination count={products.products?.totalPages} onChange={handlePaginationChange}/>
+                            <Pagination count={products.products?.totalPages} onChange={handlePaginationChange} />
                         </div>
                     </section>
                 </main>

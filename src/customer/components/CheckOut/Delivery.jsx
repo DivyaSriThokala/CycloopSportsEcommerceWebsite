@@ -1,6 +1,7 @@
 import { Box, Button, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router';
+import { getOrderById } from '../../../State/Order/Action';
 
 const Delivery = () => {
   const navigate = useNavigate();
@@ -18,7 +19,8 @@ const Delivery = () => {
     }
     console.log(personalDetails);
 
-    navigate(`/checkout/?step=3&order_Id=${orderId}`);
+
+    navigate(`/checkout/?step=3&order_Id=${orderId}&deliveryType=${personalDetails.deliveryType}`);
   }
 
 

@@ -8,49 +8,66 @@ import '../HomePage/HomePage.css';
 import JerseyImage from '../../../static/jerset_Home_Image.png';
 import SaleProduct from './SaleProduct'
 import { useLocation, useNavigate, useParams } from 'react-router'
+import { useDispatch } from 'react-redux'
+import { findProducts } from '../../../State/Product/Action'
 
 
 
 const HomePage = () => {
     const bikeFilters = [
         {
-            id: 'type',
-            name: 'Type',
+            id: 'minPrice',
+            name: 'Min Price',
             options: [
-                { value: 'road-bike', label: 'Road Bike' },
-                { value: 'time-trial-bike', label: 'Time Trial Bike' },
-                { value: 'mountain-bike', label: 'Mountain Bike' },
-                { value: 'track-bike', label: 'Track Bike' },
+                { value: '0', label: '0' },
+                { value: '100000', label: '100000' },
+                { value: '200000', label: '200000' },
+                { value: '500000', label: '500000' },
             ]
         },
         {
-            id: 'wheelSize',
-            name: 'Wheel Size',
+            id: 'maxPrice',
+            name: 'Max Price',
             options: [
-                { value: 'low-profile-wheel', label: 'Low Profile Wheel' },
-                { value: 'mid-profile-wheel', label: 'Mid Profile Wheel' },
-                { value: 'high-profile-wheel', label: 'High Profile Wheel' },
-                { value: 'disc-wheel', label: 'Disc Wheel' }
+                { value: '100000', label: '100000' },
+                { value: '200000', label: '200000' },
+                { value: '500000', label: '500000' },
+                { value: '1000000', label: '1000000' },
             ]
         },
         {
-            id: 'brand',
-            name: 'Brand',
+            id: 'color',
+            name: 'Color',
             options: [
-                { value: 'basso', label: 'Basso' },
-                { value: 'bmc', label: 'BMC' },
-                { value: 'cervelo', label: 'Cervelo' },
-                { value: 'giant', label: 'Giant' },
-                { value: 'ridley', label: 'Ridley' },
-                { value: 'polygon', label: 'Polygon' },
+                { value: 'black', label: 'Black' },
+                { value: 'blue', label: 'Blue' },
+                { value: 'red', label: 'Red' },
+                { value: 'white', label: 'White' },
+                { value: 'silver', label: 'Silver' },
+                { value: 'yellow', label: 'Yellow' },
             ]
         }
     ]
 
     const location = useLocation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const decodedQueryString = decodeURIComponent(location.search);
+    const searchParams = new URLSearchParams(decodedQueryString);
+    const colorValue = searchParams.get("color")
+    const sizeValue = searchParams.get("size")
+    const minPriceValue = searchParams.get("minPrice")
+    const maxPriceValue = searchParams.get("maxPrice")
+    const discount = searchParams.get("minDiscount")
+    const sortValue = searchParams.get("sort")
+    const pageNumber = searchParams.get("pageNumber") || 1;
+    const stockValue = searchParams.get("stock");
     const handleSubmit = () => {
-        navigate("/cycling/products/Jersey");
+        navigate(`/cycling/products/Cycle?color=${colorValue}&minPrice=${minPriceValue}&maxPrice=${maxPriceValue}`);
+    }
+
+    const handleBuyNow = () => {
+        navigate(`/cycling/products/Cycle`);
     }
 
     const handleProducts = () => {
@@ -81,10 +98,39 @@ const HomePage = () => {
         }
 
         const query = searchParams.toString();
+        console.log("color", colorValue);
         navigate({ search: `?${query}` });
+        console.log("-color", colorValue);
     }
 
-   
+    useEffect(() => {
+        console.log("sending again");
+        const data = {
+            category: "Cycle",
+            colors: colorValue || "",
+            sizes: sizeValue || "",
+            minPrice: minPriceValue || 0,
+            maxPrice: maxPriceValue || 1000000,
+            minDiscount: discount || 0,
+            sort: sortValue || "price_low",
+            pageNumber: pageNumber - 1,
+            pageSize: 9,
+            stock: stockValue || "in_stock",
+
+        }
+        console.log("sending data to Action.js:", data);
+        dispatch(findProducts(data))
+    }, ["Cycle",
+        colorValue,
+        sizeValue,
+        minPriceValue,
+        maxPriceValue,
+        discount,
+        sortValue,
+        pageNumber,
+        stockValue,
+    ])
+
 
 
     return (
@@ -94,7 +140,7 @@ const HomePage = () => {
                 <div className='bike-section'>
                     <div className='font-bold text-6xl pt-10'>EXPLORE ! THE WORLD OF SPORTS</div>
                     <div className='text-3xl p-5'>Buy your new bike with our no cost EMI option</div>
-                    <Button className="rounded-l-md w-[8rem] h-[3rem] " onClick={handleSubmit} style={{ backgroundColor: '#66cdaa', color: 'white', borderRadius: '20px' }}>BUY NOW</Button>
+                    <Button className="rounded-l-md w-[8rem] h-[3rem] " onClick={handleBuyNow} style={{ backgroundColor: '#66cdaa', color: 'white', borderRadius: '20px' }}>BUY NOW</Button>
                     <div className="center-container" style={{ position: 'relative', width: '100%', height: '100%' }}>
                         <img src={HomeBikeImage} alt='' />
                         <div style={{
@@ -165,7 +211,7 @@ const HomePage = () => {
                             </div>
 
                             <div className='nutrients-cover-grid w-[26rem] h-[18rem] p-10 m-20 relative' style={{ border: '2px solid black', borderRadius: '10px' }}>
-                                <img src={JerseyImage} alt="Image Description" style={{
+                                <img src='https://bumsonthesaddle.com/cdn/shop/files/Artboard1_1800x1800.jpg?v=1709557408' alt="Image Description" style={{
                                     position: 'absolute',
                                     top: '-20%',
                                     right: '-10%',

@@ -29,7 +29,7 @@ const OrderCard = (props) => {
 
                 </Grid>
                 <Grid item xs={4}>
-                    {true &&
+                    {(item.orderStatus === "DELIVERED") &&
                         <div>
                             <p>
                                 <AdjustIcon sx={{ width: "15px", height: "15px" }} className='text-green-600 mr-2 text-sm' />
@@ -37,13 +37,14 @@ const OrderCard = (props) => {
                                     Delivered  within 7 days
                                 </span>
                             </p>
-                            <p className='text-xs'>Your item has been {item.orderStatus}</p>
+                            <p className='text-xs'>{(item.orderStatus === "DELIVERED") ? "Order DELIVERED" : `Your item has been ${item.orderStatus}`}</p>
+
                         </div>
                     }
-                    {false &&
+                    {(item.orderStatus !== "DELIVERED") &&
                         <p>
                             <AdjustIcon sx={{ width: "15px", height: "15px" }} className='text-blue-600 mr-2 text-sm' />
-                            <span>Expected Delievery on Mar 03</span>
+                            <span>Expected Delievery within 7 days</span>
                         </p>
                     }
 

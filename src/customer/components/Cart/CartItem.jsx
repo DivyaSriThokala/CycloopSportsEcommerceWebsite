@@ -7,13 +7,13 @@ import { removeCartItem, updateCartItem } from '../../../State/Cart/Action';
 
 const CartItem = ({ item }) => {
 
-   
+
     const dispatch = useDispatch();
     const handleUpdateCartItem = (num) => {
         const data = {
             data: { quantity: item.quantity + num }, cartItemId: item?.id
         }
-        console.log("sending to action.js",data);
+        console.log("sending to action.js", data);
         dispatch(updateCartItem(data));
     }
 
@@ -38,7 +38,7 @@ const CartItem = ({ item }) => {
                         <p className='text-green-600 font-semibold'>{item.product.discountPercent}%</p>
                     </div>
                 </div>
-                <div className='ml-auto space-y-1'>
+                <div> <div className='ml-auto space-y-1'>
                     <div className='flex justify-end pb-10' >
 
                         <Button onClick={handleRemoveCartItem} sx={{ color: "RGB(145 85 253)" }}>Remove</Button>
@@ -50,7 +50,8 @@ const CartItem = ({ item }) => {
                     <IconButton sx={{ color: "RGB(145 85 253)" }} onClick={() => handleUpdateCartItem(1)}>
                         <AddCircleOutlineIcon />
                     </IconButton>
-                </div>
+                </div></div>
+
 
 
             </div>

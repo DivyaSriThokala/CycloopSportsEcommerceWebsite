@@ -17,24 +17,33 @@ const OrderDetails = () => {
     const param = useParams();
     const orderId = param.orderId;
     console.log(orderId);
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getOrderById(orderId))
     }, [orderId])
     const { order } = useSelector(store => store);
     console.log("order Id detail", order);
-    const status=order.order?.orderStatus;
+    const status = order.order?.orderStatus;
     const steps = [
         'Order Confirmed',
         'Shipped',
-        'Out For Delivery',
-        'Shipped'
+        'Delivered'
     ];
+
+
+    let activeStep = 1;
+    if (order.order?.orderStatus === 'SHIPPED') {
+        activeStep = 2;
+    } else if (order.order?.orderStatus === 'DELIVERED') {
+        activeStep = 3;
+    }
+
+
 
     const currentDate = new Date();
     const formattedDate = `${currentDate.getMonth() + 1}/${currentDate.getDate()}/${currentDate.getFullYear()}`;
-    console.log(formattedDate); 
-    
+    console.log(formattedDate);
+
 
     return (
         <div className='m-10'>
@@ -57,7 +66,7 @@ const OrderDetails = () => {
             </div>
             <div className='p-5 mt-10'>
                 <Box sx={{ width: '100%' }}>
-                    <Stepper activeStep={1} alternativeLabel>
+                    <Stepper activeStep={activeStep} alternativeLabel>
                         {steps.map((label) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
@@ -83,7 +92,7 @@ const OrderDetails = () => {
                             </Grid>
                             <Grid item xs={12} lg={8}>
                                 <h4 className='text-left font-semibold '>Address</h4>
-                                <p className='text-left '> 9-44 Mutlur,Vatticherukuru Mandal,Guntur District,Andhra Pradesh</p>
+                                <p className='text-left '> <b>{order.order?.shippingAddress.firstName} {order.order?.shippingAddress.lastName}</b>, {order.order?.shippingAddress.streetAddress}, {order.order?.shippingAddress.city}, {order.order?.shippingAddress.state}, {order.order?.shippingAddress.mobile}</p>
                             </Grid>
 
                         </Grid>
