@@ -63,7 +63,7 @@ const HomePage = () => {
     const pageNumber = searchParams.get("pageNumber") || 1;
     const stockValue = searchParams.get("stock");
     const handleSubmit = () => {
-        navigate(`/cycling/products/Cycle?color=${colorValue}&minPrice=${minPriceValue}&maxPrice=${maxPriceValue}`);
+        navigate(`/cycling/products/Cycle?color=${colorValue===null?"":colorValue}&minPrice=${minPriceValue}&maxPrice=${maxPriceValue}`);
     }
 
     const handleBuyNow = () => {
@@ -107,7 +107,7 @@ const HomePage = () => {
         console.log("sending again");
         const data = {
             category: "Cycle",
-            colors: colorValue || "",
+            colors: colorValue === null ? "" : colorValue,
             sizes: sizeValue || "",
             minPrice: minPriceValue || 0,
             maxPrice: maxPriceValue || 1000000,
