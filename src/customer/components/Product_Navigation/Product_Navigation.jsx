@@ -19,6 +19,10 @@ export default function Product_Navigation() {
      navigate("/account/order");
   }
 
+  const handleProduct = () => {
+    navigate("/productsHomePage");
+  }
+
   const navigation = [
     { name: 'Products', href: '#', current: false },
     { name: 'Track Order', href:'#', current: false },
@@ -57,7 +61,7 @@ export default function Product_Navigation() {
                     {navigation.map((item) => (
                       <a 
                         key={item.name}
-                        onClick={item.name==='Track Order'?handleOrder:null}
+                       onClick={item.name === 'Track Order' ? handleOrder : item.name === "Products" ? handleProduct : null}
                         className={classNames(
                           item.current ? ' text-black px-6' : 'text-white  hover:text-grey px-6',
                           // 'rounded-md px-3 py-2 text-sm font-medium'
