@@ -74,6 +74,10 @@ const HomePage = () => {
         navigate("/ProductsHomePage");
     }
 
+     const handleNutritions=()=>{
+        navigate("/Sports/Collections/Nutritions")
+    }
+
 
     const handleFilter = (value, sectionId) => {
         const searchParams = new URLSearchParams(location.search);
@@ -224,7 +228,7 @@ const HomePage = () => {
                                 <h2 className='pt-12 mt-10 text-left font-semibold text-3xl'>NUTRITIONS</h2>
                                 <p className='pt-3 text-left'>GET MAXIMUM RESULTS</p>
                                 <div className='pt-3'>
-                                    <Button className="rounded-l-md w-[8rem] h-[2rem]" style={{ backgroundColor: '#66cdaa', color: 'white', borderRadius: '20px', border: '2px solid black' }}>VIEW MORE</Button>
+                                    <Button onClick={handleNutritions} className="rounded-l-md w-[8rem] h-[2rem]" style={{ backgroundColor: '#66cdaa', color: 'white', borderRadius: '20px', border: '2px solid black' }}>VIEW MORE</Button>
                                 </div>
 
                             </div>
